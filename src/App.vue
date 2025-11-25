@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import TeamSelector from './components/TeamSelector.vue'
 import ResultCard from './components/ResultCard.vue'
-import Rink from './components/Rink.vue'
+import Rink from './components/TheRink.vue'
 import type { NHLTeam } from './data/nhl-teams'
 
 const homeTeam = ref<NHLTeam | null>(null)
