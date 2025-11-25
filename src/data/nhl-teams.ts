@@ -1,4 +1,4 @@
-interface NHLTeam {
+export interface NHLTeam {
   id: string
   name: string
   primary: string
@@ -7,7 +7,7 @@ interface NHLTeam {
   darkText: boolean
 }
 
-export const NHLColors: NHLTeam[] = [
+export const NHLTeams: NHLTeam[] = [
   // Anaheim Ducks
   {
     id: 'ana',

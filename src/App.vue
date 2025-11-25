@@ -1,5 +1,44 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import TeamSelector from './components/TeamSelector.vue'
+import ResultCard from './components/ResultCard.vue'
+import Rink from './components/Rink.vue'
+import type { NHLTeam } from './data/nhl-teams'
 
+const homeTeam = ref<NHLTeam | null>(null)
+const awayTeam = ref<NHLTeam | null>(null)
+
+const updateHomeTeam = (
+  team:
+    | NHLTeam
+    | {
+        id: string
+        name: string
+        primary: string
+        secondary: string
+        tertiary?: string | undefined
+        darkText: boolean
+      }
+    | null,
+) => {
+  homeTeam.value = team
+}
+
+const updateAwayTeam = (
+  team:
+    | NHLTeam
+    | {
+        id: string
+        name: string
+        primary: string
+        secondary: string
+        tertiary?: string | undefined
+        darkText: boolean
+      }
+    | null,
+) => {
+  awayTeam.value = team
+}
 </script>
 
 <template>
@@ -7,110 +46,17 @@
     <h1>🏒 NHL Color Accessibility Checker</h1>
 
     <!-- Team Selection -->
-    <div class="team-selection">
-      <div class="team-selector">
-        <label>Home Team</label>
-        <select>
-          <option>Select a team...</option>
-          <option selected>Toronto Maple Leafs</option>
-          <option>Montreal Canadiens</option>
-          <option>Boston Bruins</option>
-        </select>
-        <div class="selected-team">
-          <div class="color-swatch" style="background-color: #003e7e"></div>
-          <div class="team-info">
-            <div class="team-name">Toronto Maple Leafs</div>
-            <div class="team-color-code">#003E7E</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="team-selector">
-        <label>Away Team</label>
-        <select>
-          <option>Select a team...</option>
-          <option>Toronto Maple Leafs</option>
-          <option selected>Montreal Canadiens</option>
-          <option>Boston Bruins</option>
-        </select>
-        <div class="selected-team">
-          <div class="color-swatch" style="background-color: #af1e2d"></div>
-          <div class="team-info">
-            <div class="team-name">Montreal Canadiens</div>
-            <div class="team-color-code">#AF1E2D</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <TeamSelector @update:homeTeam="updateHomeTeam" @update:awayTeam="updateAwayTeam" />
 
     <!-- Rink Visualization -->
-    <div class="rink-container">
-      <div class="rink-label">On The Ice</div>
-      <div class="rink">
-        <!-- Rink markings -->
-        <div class="goal-line left"></div>
-        <div class="blue-line left"></div>
-        <div class="center-line"></div>
-        <div class="blue-line right"></div>
-        <div class="goal-line right"></div>
-        <div class="center-dot"></div>
-
-        <!-- Team 1 players (Toronto - Blue) - Left side -->
-        <div class="player-dot" style="background-color: #003e7e"></div>
-        <div class="player-dot" style="background-color: #003e7e"></div>
-        <div class="player-dot" style="background-color: #003e7e"></div>
-        <div class="player-dot" style="background-color: #003e7e"></div>
-        <div class="player-dot" style="background-color: #003e7e"></div>
-
-        <!-- Team 2 players (Montreal - Red) - Right side -->
-        <div class="player-dot" style="background-color: #af1e2d"></div>
-        <div class="player-dot" style="background-color: #af1e2d"></div>
-        <div class="player-dot" style="background-color: #af1e2d"></div>
-        <div class="player-dot" style="background-color: #af1e2d"></div>
-        <div class="player-dot" style="background-color: #af1e2d"></div>
-        <div class="player-dot" style="background-color: #af1e2d"></div>
-      </div>
-    </div>
+    <Rink :homeTeam="homeTeam" :awayTeam="awayTeam" />
 
     <!-- Accessibility Results -->
-    <div class="results-section">
-      <div class="results-header">Accessibility Results</div>
-
-      <div class="results-badges">
-        <div class="badge-item">
-          <span class="badge-label">Deuteranopia</span>
-          <div class="badge-icon pass">✓</div>
-          <div class="badge-swatches">
-            <div class="badge-swatch" style="background-color: #1a4a7e"></div>
-            <div class="badge-swatch" style="background-color: #8a5a3d"></div>
-          </div>
-        </div>
-
-        <div class="badge-item">
-          <span class="badge-label">Protanopia</span>
-          <div class="badge-icon pass">✓</div>
-          <div class="badge-swatches">
-            <div class="badge-swatch" style="background-color: #1e497a"></div>
-            <div class="badge-swatch" style="background-color: #865838"></div>
-          </div>
-        </div>
-
-        <div class="badge-item">
-          <span class="badge-label">Tritanopia</span>
-          <div class="badge-icon pass">✓</div>
-          <div class="badge-swatches">
-            <div class="badge-swatch" style="background-color: #003d5e"></div>
-            <div class="badge-swatch" style="background-color: #cf2e4d"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="overall-result pass">✓ All Clear! These teams pass all vision tests</div>
-    </div>
+    <ResultCard :homeTeam="homeTeam" :awayTeam="awayTeam" />
   </div>
 </template>
 
-<style scoped>
+<!-- <style scoped>
 header {
   line-height: 1.5;
 }
@@ -137,7 +83,7 @@ header {
     flex-wrap: wrap;
   }
 }
-</style>
+</style> -->
 
 <style>
 * {
@@ -160,7 +106,7 @@ body {
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   background: #fff;
   border: 3px solid #223759;
@@ -177,89 +123,6 @@ h1 {
   color: #223759;
   text-transform: uppercase;
   letter-spacing: -0.5px;
-}
-
-/* Team Selection */
-.team-selection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 50px;
-}
-
-.team-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.team-selector label {
-  font-size: 14px;
-  font-weight: 800;
-  color: #223759;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.team-selector select {
-  padding: 14px 16px;
-  border: 2px solid #223759;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  background: white;
-  color: #223759;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.team-selector select:hover {
-  background: #e9e5e1;
-  border-color: #bb4424;
-}
-
-.team-selector select:focus {
-  outline: none;
-  border-color: #468dcc;
-  box-shadow: 0 0 0 3px rgba(70, 141, 204, 0.2);
-}
-
-.selected-team {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 12px;
-  padding: 16px;
-  background: #e9e5e1;
-  border: 2px solid #223759;
-  border-radius: 12px;
-}
-
-.color-swatch {
-  width: 48px;
-  height: 48px;
-  border: 3px solid #223759;
-  border-radius: 8px;
-  flex-shrink: 0;
-}
-
-.team-info {
-  flex: 1;
-}
-
-.team-name {
-  font-weight: 800;
-  font-size: 16px;
-  color: #223759;
-}
-
-.team-color-code {
-  font-size: 13px;
-  color: #223759;
-  font-family: 'Courier New', monospace;
-  font-weight: 600;
-  margin-top: 4px;
-  opacity: 0.7;
 }
 
 /* Rink Visualization */
@@ -282,134 +145,41 @@ h1 {
   width: 100%;
 }
 
-.rink {
-  width: 100%;
-  height: 300px;
-  background: #e9e5e1;
-  border: 4px solid #223759;
-  border-radius: 150px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(34, 55, 89, 0.2);
+/* View mode tabs */
+.view-mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-/* Rink lines */
-.blue-line {
-  position: absolute;
-  width: 4px;
-  height: 100%;
-  background: #468dcc;
-  top: 0;
-}
-
-.blue-line.left {
-  left: 25%;
-}
-
-.blue-line.right {
-  right: 25%;
-}
-
-.center-line {
-  position: absolute;
-  width: 4px;
-  height: 100%;
-  background: #bb4424;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.goal-line {
-  position: absolute;
-  width: 4px;
-  height: 100%;
-  background: #bb4424;
-  top: 0;
-}
-
-.goal-line.left {
-  left: 8%;
-}
-
-.goal-line.right {
-  right: 8%;
-}
-
-.center-dot {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  background: #468dcc;
-  border: 3px solid #223759;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Player dots */
-.player-dot {
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 3px solid #223759;
+.view-mode-tab {
+  padding: 10px 20px;
+  border: 2px solid #223759;
+  background: white;
+  color: #223759;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.player-dot:hover {
-  transform: scale(1.15);
-  border-color: #223759;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+.view-mode-tab:hover {
+  background: #e9e5e1;
+  transform: translateY(-2px);
 }
 
-/* Positioned dots - Team 1 on left, Team 2 on right */
-.player-dot:nth-child(7) {
-  top: 25%;
-  left: 18%;
-}
-.player-dot:nth-child(8) {
-  top: 50%;
-  left: 15%;
-}
-.player-dot:nth-child(9) {
-  top: 75%;
-  left: 20%;
-}
-.player-dot:nth-child(10) {
-  top: 40%;
-  left: 32%;
-}
-.player-dot:nth-child(11) {
-  top: 65%;
-  left: 35%;
+.view-mode-tab.active {
+  background: #468dcc;
+  color: white;
+  border-color: #468dcc;
 }
 
-.player-dot:nth-child(12) {
-  top: 30%;
-  left: 68%;
-}
-.player-dot:nth-child(13) {
-  top: 55%;
-  left: 65%;
-}
-.player-dot:nth-child(14) {
-  top: 70%;
-  left: 80%;
-}
-.player-dot:nth-child(15) {
-  top: 45%;
-  left: 82%;
-}
-.player-dot:nth-child(16) {
-  top: 20%;
-  left: 85%;
-}
-.player-dot:nth-child(17) {
-  top: 80%;
-  left: 70%;
-}
+
 
 /* Accessibility Results */
 .results-section {
@@ -511,5 +281,134 @@ h1 {
 .overall-result.fail {
   background: #bb4424;
   color: white;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+
+  .container {
+    padding: 24px 20px;
+    border-radius: 12px;
+    border-width: 2px;
+  }
+
+  h1 {
+    font-size: 22px;
+    margin-bottom: 24px;
+    letter-spacing: -0.3px;
+  }
+
+  .rink-container {
+    margin-bottom: 32px;
+  }
+
+  .rink-label {
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 16px;
+  }
+
+  .view-mode-tabs {
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .view-mode-tab {
+    padding: 8px 12px;
+    font-size: 11px;
+    letter-spacing: 0.3px;
+  }
+
+  .view-mode-tab:hover {
+    transform: none;
+  }
+
+  .results-section {
+    margin-top: 32px;
+  }
+
+  .results-header {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .results-badges {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .badge-item {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .badge-label {
+    font-size: 12px;
+  }
+
+  .badge-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+
+  .badge-swatch {
+    width: 20px;
+    height: 20px;
+  }
+
+  .overall-result {
+    padding: 20px 16px;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+  }
+
+  .badge-item {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 12px;
+  }
+
+  .container {
+    padding: 20px 16px;
+    border-radius: 8px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .view-mode-tab {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .badge-item {
+    padding: 12px 14px;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .badge-label {
+    font-size: 12px;
+  }
+
+  .overall-result {
+    font-size: 13px;
+    padding: 18px 14px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
 }
 </style>
