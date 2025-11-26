@@ -43,6 +43,18 @@ const updateAwayTeam = (
 
 <template>
   <div class="container">
+    <a
+      href="https://github.com/emilynassi/nhl-color-checker"
+      class="github-badge"
+      target="_blank"
+      aria-label="View source on GitHub"
+    >
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"
+        />
+      </svg>
+    </a>
     <h1>🏒 NHL Color Accessibility Checker</h1>
 
     <!-- Team Selection -->
@@ -113,6 +125,33 @@ body {
   border-radius: 16px;
   padding: 40px;
   box-shadow: 0 8px 20px rgba(34, 55, 89, 0.15);
+  position: relative;
+}
+
+.github-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #223759;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.github-badge:hover {
+  background: #2e6fa8;
+  transform: translateY(-2px);
+}
+
+.github-badge svg {
+  width: 22px;
+  height: 22px;
+  fill: white;
 }
 
 h1 {
@@ -174,12 +213,10 @@ h1 {
 }
 
 .view-mode-tab.active {
-  background: #468dcc;
+  background: #2e6fa8;
   color: white;
-  border-color: #468dcc;
+  border-color: #2e6fa8;
 }
-
-
 
 /* Accessibility Results */
 .results-section {
@@ -239,7 +276,7 @@ h1 {
 }
 
 .badge-icon.pass {
-  background: #468dcc;
+  background: #2e6fa8;
   color: white;
 }
 
@@ -274,7 +311,7 @@ h1 {
 }
 
 .overall-result.pass {
-  background: #468dcc;
+  background: #2e6fa8;
   color: white;
 }
 
