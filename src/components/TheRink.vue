@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import { useTeamStore, VIEW_MODE, type ViewMode } from '@/composables/useTeamStore';
 
 const { getColorsForMode } = useTeamStore()
-const selectedViewMode = ref<ViewMode>(VIEW_MODE.NORMAL)
+const selectedViewMode = ref<ViewMode>(VIEW_MODE.ORIGINAL)
 
 const homeTeamColor = computed(() => {
   return getColorsForMode(selectedViewMode.value).homeColor

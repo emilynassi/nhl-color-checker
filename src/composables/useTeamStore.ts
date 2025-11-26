@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import type { NHLTeam } from '@/data/nhl-teams'
 
 export const VIEW_MODE = {
-  NORMAL: 'normal',
+  ORIGINAL: 'original',
   DEUTERANOPIA: 'deuteranopia',
   PROTANOPIA: 'protanopia',
   TRITANOPIA: 'tritanopia',
@@ -46,8 +46,8 @@ export const useTeamStore = () => {
 
   // Helper to get simulated colors for a specific view mode
   const getColorsForMode = (mode: string) => {
-    // For normal mode or if no results, return original colors
-    if (!accessibilityResults.value || mode === 'normal') {
+    // For original mode or if no results, return original colors
+    if (!accessibilityResults.value || mode === 'original') {
       return {
         homeColor: homeTeam.value?.primary,
         awayColor: awayTeam.value?.primary,
