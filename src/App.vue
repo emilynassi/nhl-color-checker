@@ -55,7 +55,7 @@ const updateAwayTeam = (
         />
       </svg>
     </a>
-    <h1>🏒 NHL Color Accessibility Checker</h1>
+    <h1>🏒 NHL Jersey Accessibility Checker</h1>
 
     <!-- Team Selection -->
     <TeamSelector @update:homeTeam="updateHomeTeam" @update:awayTeam="updateAwayTeam" />
@@ -332,10 +332,22 @@ h1 {
     border-width: 2px;
   }
 
+  .github-badge {
+    top: 12px;
+    right: 12px;
+    padding: 8px;
+  }
+
+  .github-badge svg {
+    width: 18px;
+    height: 18px;
+  }
+
   h1 {
     font-size: 22px;
     margin-bottom: 24px;
     letter-spacing: -0.3px;
+    padding-right: 40px;
   }
 
   .rink-container {
@@ -420,10 +432,22 @@ h1 {
     border-radius: 8px;
   }
 
+  .github-badge {
+    top: 10px;
+    right: 10px;
+    padding: 6px;
+  }
+
+  .github-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+
   h1 {
     font-size: 20px;
     margin-bottom: 20px;
     line-height: 1.3;
+    padding-right: 35px;
   }
 
   .view-mode-tab {
